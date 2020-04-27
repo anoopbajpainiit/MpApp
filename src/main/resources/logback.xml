@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="DEV_HOME" value="C:/apps/weblogic/parlsprs/servers/mpappLogger/logs" />
+
+	<appender name="MpApplicationAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${DEV_HOME}/MpApp.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			rollover daily
+			<fileNamePattern>${DEV_HOME}/archived/MpApp.%d{yyyy-MM-dd}.%i.log
+                        </fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+	
+	
+	<appender name="MpApplicationErrorAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${DEV_HOME}/MpAppErrors.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			rollover daily
+			<fileNamePattern>${DEV_HOME}/archived/MpAppErrors.%d{yyyy-MM-dd}.%i.log
+                        </fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+	
+	<logger name="MpApp" level="debug"
+		additivity="false">
+		<appender-ref ref="MpApplicationAppender" />
+	</logger>
+
+	<logger name="MpAppErrors" level="error"
+		additivity="false">
+		<appender-ref ref="MpApplicationErrorAppender" />
+	</logger>
+
+	<root level="error">
+		<appender-ref ref="MpApplicationErrorAppender" />
+	</root>
+
+</configuration>
